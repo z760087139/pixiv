@@ -369,6 +369,23 @@ func (a *AppPixivAPI) SearchIllust(word string, searchTarget string, sort string
 	return data, nil
 }
 
+func (a *AppPixivAPI) SearchIllustWithoutAuth(word string, searchTarget string, sort string, duration string, filter string, offset int) (*SearchIllustResult, error) {
+	path := "v1/search/illust"
+	data := &SearchIllustResult{}
+	params := &searchIllustParams{
+		Word:         word,
+		SearchTarget: searchTarget,
+		Sort:         sort,
+		Filter:       filter,
+		Duration:     duration,
+		Offset:       offset,
+	}
+	if err := a.request(path, params, data, false); err != nil {
+		return nil, err
+	}
+	return data, nil
+}
+
 type illustBookmarkDetailParams struct {
 	IllustID uint64 `url:"illust_id,omitempty"`
 }
